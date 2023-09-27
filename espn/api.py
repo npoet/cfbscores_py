@@ -29,7 +29,7 @@ def get_scores():
             try:
                 obj["tv"] = i["competitions"][0]["geoBroadcasts"][0]["media"]["shortName"]
             except IndexError:
-                obj["tv"] = ""
+                obj["tv"] = "Off Air"
             try:
                 obj["odds"] = i["competitions"][0]["odds"][0]["details"]
             except KeyError:
@@ -63,7 +63,7 @@ def get_scores():
             try:
                 obj["tv"] = i["competitions"][0]["geoBroadcasts"][0]["media"]["shortName"]
             except IndexError:
-                obj["tv"] = ""
+                obj["tv"] = "Off Air"
             try:
                 obj["home"] = "#" + i["competitions"][0]["competitors"][0]["curatedRank"]["current"] + obj["home"]
             except KeyError:
