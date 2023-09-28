@@ -17,10 +17,12 @@ def get_scores():
         if i["status"]["type"]["state"] == "pre":
             obj = {
                 "home": i["competitions"][0]["competitors"][0]["team"]["location"],
+                "home_site": i["competitions"][0]["competitors"][0]["team"]["links"][0]["href"],
                 "home_record": i["competitions"][0]["competitors"][0]["records"][0]["summary"],
                 "home_mascot": i["competitions"][0]["competitors"][0]["team"]["name"],
                 "home_logo": i["competitions"][0]["competitors"][0]["team"]["logo"],
                 "away": i["competitions"][0]["competitors"][1]["team"]["location"],
+                "away_site": i["competitions"][0]["competitors"][1]["team"]["links"][0]["href"],
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
                 "away_mascot": i["competitions"][0]["competitors"][1]["team"]["name"],
                 "away_logo": i["competitions"][0]["competitors"][1]["team"]["logo"],
@@ -50,10 +52,12 @@ def get_scores():
         else:
             obj = {
                 "home": i["competitions"][0]["competitors"][0]["team"]["abbreviation"],
+                "home_site": i["competitions"][0]["competitors"][0]["team"]["links"][0]["href"],
                 "home_record": i["competitions"][0]["competitors"][0]["records"][0]["summary"],
                 "home_mascot": i["competitions"][0]["competitors"][0]["team"]["name"],
                 "home_logo": i["competitions"][0]["competitors"][0]["team"]["logo"],
                 "away": i["competitions"][0]["competitors"][1]["team"]["abbreviation"],
+                "away_site": i["competitions"][0]["competitors"][1]["team"]["links"][0]["href"],
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
                 "away_mascot": i["competitions"][0]["competitors"][1]["team"]["name"],
                 "away_logo": i["competitions"][0]["competitors"][1]["team"]["logo"],
