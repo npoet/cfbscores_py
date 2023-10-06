@@ -1,3 +1,4 @@
-fastapi[uvicorn]==0.103.2
+fastapi
+uvicorn
 pymongo==4.5.0
 Requests==2.31.0
