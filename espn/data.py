@@ -66,7 +66,7 @@ def get_cfb():
                         home_rec["athlete"]["jersey"] + " " +
                         home_rec["displayValue"]
                 )
-            except KeyError:
+            except:
                 pass
             try:
                 away_pas = i["competitions"][0]["competitors"][1]["leaders"][0]["leaders"][0]
@@ -87,7 +87,7 @@ def get_cfb():
                         away_rec["athlete"]["jersey"] + " " +
                         away_rec["displayValue"]
                 )
-            except KeyError:
+            except:
                 pass
             scores.append(obj)
         elif i["status"]["type"]["state"] == "in":
@@ -161,7 +161,7 @@ def get_cfb():
                         rec_leader["athlete"]["shortName"] + " " +
                         rec_leader["displayValue"]
                 )
-            except KeyError:
+            except:
                 pass
             try:
                 obj["last_play"] = i["competitions"][0]["situation"]["lastPlay"]["text"]
@@ -236,7 +236,7 @@ def get_nfl():
                         home_rec["athlete"]["jersey"] + " " +
                         home_rec["displayValue"]
                 )
-            except KeyError:
+            except:
                 pass
             try:
                 away_pas = i["competitions"][0]["competitors"][1]["leaders"][0]["leaders"][0]
@@ -257,7 +257,7 @@ def get_nfl():
                         away_rec["athlete"]["jersey"] + " " +
                         away_rec["displayValue"]
                 )
-            except KeyError:
+            except:
                 pass
             scores.append(obj)
         elif i["status"]["type"]["state"] == "in":
@@ -329,7 +329,7 @@ def get_nfl():
                         rec_leader["athlete"]["shortName"] + " " +
                         rec_leader["displayValue"]
                 )
-            except KeyError:
+            except:
                 pass
             try:
                 obj["last_play"] = i["competitions"][0]["situation"]["lastPlay"]["text"]
