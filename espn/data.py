@@ -1,4 +1,5 @@
 import requests
+from .utils import convert_time
 
 
 def get_cfb():
@@ -23,7 +24,7 @@ def get_cfb():
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
                 "away_mascot": i["competitions"][0]["competitors"][1]["team"]["name"],
                 "away_logo": i["competitions"][0]["competitors"][1]["team"]["logo"],
-                "time": i["status"]["type"]["shortDetail"],
+                "time": convert_time(i["status"]["type"]["shortDetail"]),
                 "date": i["date"],
                 "type": "College"
             }
@@ -199,7 +200,7 @@ def get_nfl():
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
                 "away_mascot": i["competitions"][0]["competitors"][1]["team"]["name"],
                 "away_logo": i["competitions"][0]["competitors"][1]["team"]["logo"],
-                "time": i["status"]["type"]["shortDetail"],
+                "time": convert_time(i["status"]["type"]["shortDetail"]),
                 "date": i["date"],
                 "type": "NFL"
             }
