@@ -11,15 +11,18 @@ def convert_time(timestring):
     p_h = str(int(n[0].split(":")[0]) - 3)
     if int(p_h) == 0:
         p_h = "12"
-    elif int(p_h) < 0:
+    elif int(p_h) == -1:
+        p_h = "11"
+    elif int(p_h) < -1:
         p_h = str(0 - int(p_h))
     # create pacific time str
     p_t = p_h + ":" + n[0].split(":")[1]
     # set AM PM
+    a_p = n[1]
     if int(n[0].split(":")[0]) < 3:
         a_p = "AM"
-    else:
-        a_p = "PM"
+    if int(n[0].split(":")[0]) == 12:
+        a_p = "AM"
     dst = n[2]
     # set proper time
     if dst == "EST":
