@@ -1,6 +1,6 @@
 def convert_time(timestring):
     """
-    convert_time is a convoluted time string converter for ESPN shortDetail times
+    convert_time is a convoluted time string converter for ESPN shortDetail times (if you're reading this I am so sorry)
     :param timestring: ESPN shortDetail time as string, i.e. "10/14 - 11:00 PM EDT"
     :return: replacement string converted to pacific time, i.e. "10/14 - 8:00 PM PDT"
     """
@@ -13,7 +13,9 @@ def convert_time(timestring):
         p_h = "12"
     elif int(p_h) == -1:
         p_h = "11"
-    elif int(p_h) < -1:
+    elif int(p_h) == -2:
+        p_h = "10"
+    elif int(p_h) < -2:
         p_h = str(0 - int(p_h))
     # create pacific time str
     p_t = p_h + ":" + n[0].split(":")[1]
