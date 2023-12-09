@@ -28,9 +28,9 @@ def get_nfl():
             except IndexError:
                 obj["tv"] = "Off Air"
             try:
-                obj["odds"] = i["competitions"][0]["odds"][0]["details"]
+                obj["odds"] = "NFL | " + i["competitions"][0]["odds"][0]["details"]
             except KeyError:
-                obj["odds"] = "No Line"
+                obj["odds"] = "NFL | No Line"
             try:
                 rank = i["competitions"][0]["competitors"][1]["curatedRank"]["current"]
                 if rank <= 25:
