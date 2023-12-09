@@ -9,12 +9,12 @@ def get_cbb():
     for i in res:
         if i["status"]["type"]["state"] == "pre":
             obj = {
-                "home": i["competitions"][0]["competitors"][0]["team"]["location"],
+                "home": i["competitions"][0]["competitors"][0]["team"]["abbreviation"],
                 "home_site": i["competitions"][0]["competitors"][0]["team"]["links"][0]["href"],
                 "home_record": i["competitions"][0]["competitors"][0]["records"][0]["summary"],
                 "home_mascot": i["competitions"][0]["competitors"][0]["team"]["name"],
                 "home_logo": i["competitions"][0]["competitors"][0]["team"]["logo"],
-                "away": i["competitions"][0]["competitors"][1]["team"]["location"],
+                "away": i["competitions"][0]["competitors"][1]["team"]["abbreviation"],
                 "away_site": i["competitions"][0]["competitors"][1]["team"]["links"][0]["href"],
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
                 "away_mascot": i["competitions"][0]["competitors"][1]["team"]["name"],
