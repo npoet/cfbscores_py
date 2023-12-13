@@ -1,9 +1,8 @@
 from fastapi import APIRouter
 import requests
 
-from .nfl import get_nfl
-from .cfb import get_cfb, get_fcs
-from .cbb import get_cbb
+from .football import get_cfb, get_fcs, get_nfl
+from .basketball import get_cbb
 
 router = APIRouter()
 
