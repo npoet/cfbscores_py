@@ -1,5 +1,5 @@
 import requests
-from .data import create_base_obj_basketball
+from espn.basketball.data import create_base_obj_basketball
 
 
 def get_cbb():

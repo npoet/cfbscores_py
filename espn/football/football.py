@@ -1,5 +1,5 @@
 import requests
-from .data import create_base_obj_football
+from espn.football.data import create_base_obj_football
 
 
 def get_fbs():
