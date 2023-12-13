@@ -2,6 +2,12 @@ from espn.utils import convert_time
 
 
 def create_base_obj_football(input_list, game_type):
+    """
+    create_base_obj_football converts raw json data to a football scheduled/live game dict from inputs and returns a list
+    :param input_list: raw ESPN json response from func like football.get_fbs()
+    :param game_type: Competition level in ["FBS", "FCS", "NFL"]
+    :return: [{game1}, ... {gameN}] sorted by date ascending
+    """
     scores = []
     for i in input_list:
         if i["status"]["type"]["state"] == "pre" and "TBD" not in i["shortName"] and "TBA" not in i["shortName"]:
@@ -174,6 +180,12 @@ def create_base_obj_football(input_list, game_type):
 
 
 def create_base_obj_basketball(input_list, game_type):
+    """
+    create_base_obj_basketball converts raw json data to a basketball scheduled/live game dict from inputs and returns a list
+    :param input_list: raw ESPN json response from func like basketball.get_cbb()
+    :param game_type: Competition level in ["CBB"]
+    :return: [{game1}, ... {gameN}] sorted by date ascending
+    """
     scores = []
     for i in input_list:
         if i["status"]["type"]["state"] == "pre":
