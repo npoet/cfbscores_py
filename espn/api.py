@@ -9,6 +9,10 @@ router = APIRouter()
 
 @router.get("/scores")
 def get_scores():
+    """
+    get_scores combines each of the data feeds for ScoreboardGrid frontend display
+    :return: sorted([{gameA1}...{gameAN} + {gameB1}...{gameBN} ... + {gameN1} ... {gameNN}])
+    """
     all_scores = []
     try:
         all_scores += get_fbs()
