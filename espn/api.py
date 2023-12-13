@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import requests
 
-from .football import get_cfb, get_fcs, get_nfl
+from .football import get_fbs, get_fcs, get_nfl
 from .basketball import get_cbb
 
 router = APIRouter()
@@ -11,7 +11,7 @@ router = APIRouter()
 def get_scores():
     all_scores = []
     try:
-        all_scores += get_cfb()
+        all_scores += get_fbs()
     except requests.exceptions.JSONDecodeError:
         pass
     try:
