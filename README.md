@@ -1,15 +1,16 @@
 # cfbscores_py
 
- Simple FastAPI service that returns aggregations of College Football data.
+ Simple FastAPI service that returns aggregations of live and scheduled sports data for [cfbscores_react](https://github.com/npoet/cfbscores_react).
  
 ### Install
 
-#### MacOS
-* Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-* `brew install python`
-* `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
-* `python3 get-pip.py`
-* From cfbscores dir: `pip install -r requirements.txt`
+#### Prereqs:
+* Python3.x
+* python-pip
+* uvicorn
+
+From cfbscores dir: `pip install -r requirements.txt`
+
 ### Run
-* From cfbscores dir: `uvicorn main:app --reload`
-runs app and updates on changes
+* From cfbscores dir: `uvicorn main:app`
+* API listens at localhost:8000, changing this port/address requires changing spec in cfbscores_react
