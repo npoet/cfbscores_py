@@ -25,3 +25,5 @@ From cfbscores dir: `pip install -r requirements.txt`
   * FBS/FCS Football
   * NFL Football
   * D1 NCAA Basketball
+
+This API is provided as-is and was created solely for my personal use. Future implementation plans include expanding sport and TV provider support, as well as additional statistical sources. Suggestions are welcome.
