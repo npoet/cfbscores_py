@@ -13,4 +13,9 @@ From cfbscores dir: `pip install -r requirements.txt`
 
 ### Run
 * From cfbscores dir: `uvicorn main:app`
-* API listens at localhost:8000, changing this port/address requires changing spec in cfbscores_react
+* API listens at localhost:8000, changing this port/address locally requires changing spec in cfbscores_react
+
+### Data Sources
+* Current data sources include:
+  * ESPN.com for live/scheduled scores
+  * CollegeFootballData.com for ratings and season statistics
