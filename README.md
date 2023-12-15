@@ -1,6 +1,7 @@
 # cfbscores_py
 
- Simple FastAPI service that returns aggregations of live and scheduled sports data for [cfbscores_react](https://github.com/npoet/cfbscores_react).
+Simple FastAPI service that returns aggregations of live and scheduled sports data for [cfbscores_react](https://github.com/npoet/cfbscores_react). 
+Links live games to FuboTV and other online providers for easy multi-boxing.
  
 ### Install
 
@@ -8,6 +9,7 @@
 * Python3.x
 * python-pip
 * uvicorn
+* Requires local env variable CFBD_API_KEY containing personal key for CollegeFootballData.com, can be acquired for free through their site
 
 From cfbscores dir: `pip install -r requirements.txt`
 
@@ -19,3 +21,7 @@ From cfbscores dir: `pip install -r requirements.txt`
 * Current data sources include:
   * ESPN.com for live/scheduled scores
   * CollegeFootballData.com for ratings and season statistics
+* Current supported sports/divisions include:
+  * FBS/FCS Football
+  * NFL Football
+  * D1 NCAA Basketball
