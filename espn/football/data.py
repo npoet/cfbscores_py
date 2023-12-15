@@ -12,11 +12,13 @@ def create_base_obj_football(input_list, game_type):
     for i in input_list:
         if i["status"]["type"]["state"] == "pre" and "TBD" not in i["shortName"] and "TBA" not in i["shortName"]:
             obj = {
+                "home_id": i["competitions"][0]["competitors"][0]["team"]["location"],
                 "home": i["competitions"][0]["competitors"][0]["team"]["abbreviation"],
                 "home_site": i["competitions"][0]["competitors"][0]["team"]["links"][0]["href"],
                 "home_record": i["competitions"][0]["competitors"][0]["records"][0]["summary"],
                 "home_mascot": i["competitions"][0]["competitors"][0]["team"]["name"],
                 "home_logo": i["competitions"][0]["competitors"][0]["team"]["logo"],
+                "away_id": i["competitions"][0]["competitors"][1]["team"]["location"],
                 "away": i["competitions"][0]["competitors"][1]["team"]["abbreviation"],
                 "away_site": i["competitions"][0]["competitors"][1]["team"]["links"][0]["href"],
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
@@ -91,11 +93,13 @@ def create_base_obj_football(input_list, game_type):
             scores.append(obj)
         elif i["status"]["type"]["state"] == "in":
             obj = {
+                "home_id": i["competitions"][0]["competitors"][0]["team"]["location"],
                 "home": i["competitions"][0]["competitors"][0]["team"]["abbreviation"],
                 "home_site": i["competitions"][0]["competitors"][0]["team"]["links"][0]["href"],
                 "home_record": i["competitions"][0]["competitors"][0]["records"][0]["summary"],
                 "home_mascot": i["competitions"][0]["competitors"][0]["team"]["name"],
                 "home_logo": i["competitions"][0]["competitors"][0]["team"]["logo"],
+                "away_id": i["competitions"][0]["competitors"][1]["team"]["location"],
                 "away": i["competitions"][0]["competitors"][1]["team"]["abbreviation"],
                 "away_site": i["competitions"][0]["competitors"][1]["team"]["links"][0]["href"],
                 "away_record": i["competitions"][0]["competitors"][1]["records"][0]["summary"],
