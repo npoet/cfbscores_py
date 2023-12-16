@@ -5,10 +5,12 @@ from fastapi import APIRouter
 
 import cfbd
 
+# init CFBD config
 config = cfbd.Configuration()
 config.api_key['Authorization'] = os.environ["CFBD_API_KEY"]
 config.api_key_prefix['Authorization'] = 'Bearer'
 
+# create CFBD API handlers and FastAPI router
 ratings = cfbd.RatingsApi(cfbd.ApiClient(config))
 games = cfbd.GamesApi(cfbd.ApiClient(config))
 router = APIRouter()
@@ -52,7 +54,7 @@ def get_team_season(team_id):
     """
     get_team_season looks up games for the given team_id and current active season and returns a schedule list
     :param team_id: lowercase team name from input, can include spaces i.e. 'michigan', 'penn state'
-    :return:
+    :return: json object containing season game entries
     """
     resp_games = games.get_games(year=2023, team=team_id)
     season = []
@@ -72,6 +74,11 @@ def get_team_season(team_id):
 
 @router.get("/record/{team_id}")
 def get_team_records(team_id):
+    """
+    get_team_records returns record breakdowns (exp, conf, home, away) for a given team
+    :param team_id: lowercase team name from input, can include spaces i.e. 'michigan', 'penn state'
+    :return: json object containing records
+    """
     resp_rec = games.get_team_records(year=2023, team=team_id)[0]
     rec = {
         "exp_wins": resp_rec.expected_wins,
