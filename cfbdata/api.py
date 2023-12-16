@@ -68,3 +68,15 @@ def get_team_season(team_id):
             obj.update({"note": game.notes})
         season.append(obj)
     return season
+
+
+@router.get("/record/{team_id}")
+def get_team_records(team_id):
+    resp_rec = games.get_team_records(year=2023, team=team_id)[0]
+    rec = {
+        "exp_wins": resp_rec.expected_wins,
+        "conference_wl": str(resp_rec.conference_games.wins) + "-" + str(resp_rec.conference_games.losses),
+        "home_wl": str(resp_rec.home_games.wins) + "-" + str(resp_rec.home_games.losses),
+        "away_wl":  str(resp_rec.away_games.wins) + "-" + str(resp_rec.away_games.losses),
+    }
+    return rec
