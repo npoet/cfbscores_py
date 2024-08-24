@@ -27,11 +27,11 @@ def create_base_obj_football(input_list, game_type):
             try:
                 obj["home_logo"] = i["competitions"][0]["competitors"][0]["team"]["logo"]
             except KeyError:
-                obj["home_logo"] = ""
+                obj["home_logo"] = None
             try:
                 obj["away_logo"] = i["competitions"][0]["competitors"][1]["team"]["logo"]
             except KeyError:
-                obj["away_logo"] = ""
+                obj["away_logo"] = None
             try:
                 obj["home_record"] = i["competitions"][0]["competitors"][0]["records"][0]["summary"]
             except KeyError:
@@ -41,7 +41,11 @@ def create_base_obj_football(input_list, game_type):
             except KeyError:
                 obj["away_record"] = ""
             try:
-                obj["tv"] = i["competitions"][0]["geoBroadcasts"][0]["media"]["shortName"]
+                tv = i["competitions"][0]["geoBroadcasts"][0]["media"]["shortName"]
+                if len(tv) <= 10:
+                    obj["tv"] = tv
+                else:
+                    obj["tv"] = "Off Air"
             except IndexError:
                 obj["tv"] = "Off Air"
             try:

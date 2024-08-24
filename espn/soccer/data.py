@@ -37,6 +37,26 @@ def create_base_obj_soccer(input_list, game_type):
                 obj["odds"] = f"{game_type} | " + i["competitions"][0]["odds"][1]["details"]
             except KeyError:
                 obj["odds"] = f"{game_type} | No Line"
+            try:
+                home_pas = i["competitions"][0]["competitors"][0]["leaders"][0]["leaders"][0]
+                obj["home_pass"] = (
+                        home_pas["athlete"]["position"]["abbreviation"] + " " +
+                        home_pas["athlete"]["jersey"] + " " +
+                        home_pas["athlete"]["shortName"] + " " +
+                        home_pas["displayValue"] + " G"
+                )
+            except:
+                pass
+            try:
+                away_pas = i["competitions"][0]["competitors"][1]["leaders"][0]["leaders"][0]
+                obj["away_pass"] = (
+                        away_pas["athlete"]["position"]["abbreviation"] + " " +
+                        away_pas["athlete"]["jersey"] + " " +
+                        away_pas["athlete"]["shortName"] + " " +
+                        away_pas["displayValue"] + " G"
+                )
+            except:
+                pass
             scores.append(obj)
         elif i["status"]["type"]["state"] == "in":
             obj = {
@@ -80,11 +100,8 @@ def create_base_obj_soccer(input_list, game_type):
                 "home_score": i["competitions"][0]["competitors"][0]["score"],
                 "away_score": i["competitions"][0]["competitors"][1]["score"],
                 "date": i["date"],
-                "type": game_type
+                "type": game_type,
+                "tv": "Final"
             }
-            try:
-                obj["tv"] = i["competitions"][0]["geoBroadcasts"][0]["media"]["shortName"]
-            except IndexError:
-                obj["tv"] = "Off Air"
             scores.append(obj)
     return scores
