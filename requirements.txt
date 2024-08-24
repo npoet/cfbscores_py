@@ -1,3 +1,6 @@
-fastapi
+fastapi~=0.103.2
 uvicorn
 Requests==2.31.0
+
+pytz~=2024.1
+cfbd~=4.5.2

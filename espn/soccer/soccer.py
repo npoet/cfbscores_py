@@ -9,5 +9,4 @@ def get_epl():
     """
     url = "http://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard"
     res = requests.get(url).json()["events"]
-    # print(res)
     return create_base_obj_soccer(res, "EPL")
