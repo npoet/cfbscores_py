@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get("/scores")
-def get_scores():
+async def get_scores():
     """
     get_scores combines each of the data feeds for ScoreboardGrid frontend display
     :return: sorted([{gameA1}...{gameAN} + {gameB1}...{gameBN} ... + {gameN1} ... {gameNN}])
@@ -25,10 +25,6 @@ def get_scores():
         pass
     try:
         all_scores += get_nfl()
-    except requests.exceptions.JSONDecodeError:
-        pass
-    try:
-        all_scores += get_cbb()
     except requests.exceptions.JSONDecodeError:
         pass
     try:

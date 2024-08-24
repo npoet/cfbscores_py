@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 @router.get("/team/{team_id}")
-def get_team_info(team_id):
+async def get_team_info(team_id):
     """
     get_team_info builds team ratings page from cfbdata ratings/rankings statistics
     :param team_id: lowercase team name from input, can include spaces i.e. 'michigan', 'penn state'
@@ -46,11 +46,16 @@ def get_team_info(team_id):
         "fpi_sos": fpi.resume_ranks.strength_of_schedule,
         "fpi_game_control": fpi.resume_ranks.game_control
     })
+    resp_srs = ratings.get_srs_ratings(year=2023, team=team_id.lower())
+    srs = resp_srs[0]
+    return_data.update({
+        "srs_ovr_rating": srs.rating
+    })
     return return_data
 
 
 @router.get("/season/{team_id}")
-def get_team_season(team_id):
+async def get_team_season(team_id):
     """
     get_team_season looks up games for the given team_id and current active season and returns a schedule list
     :param team_id: lowercase team name from input, can include spaces i.e. 'michigan', 'penn state'
@@ -68,12 +73,16 @@ def get_team_season(team_id):
         }
         if game.notes is not None:
             obj.update({"note": game.notes})
+        if game.home_team.lower() == team_id.lower():
+            obj.update({"pg_win_prob": round(game.home_post_win_prob, 4)})
+        elif game.away_team.lower() == team_id.lower():
+            obj.update({"pg_win_prob": round(game.away_post_win_prob, 4)})
         season.append(obj)
     return season
 
 
 @router.get("/record/{team_id}")
-def get_team_records(team_id):
+async def get_team_records(team_id):
     """
     get_team_records returns record breakdowns (exp, conf, home, away) for a given team
     :param team_id: lowercase team name from input, can include spaces i.e. 'michigan', 'penn state'
