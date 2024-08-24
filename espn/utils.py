@@ -1,35 +1,26 @@
+from datetime import datetime
+import pytz
+
+
 def convert_time(timestring):
     """
-    convert_time is a convoluted time string converter for ESPN shortDetail times (if you're reading this I am so sorry)
-    :param timestring: ESPN shortDetail time as string, i.e. "10/14 - 11:00 PM EDT"
-    :return: replacement string converted to pacific time, i.e. "10/14 - 8:00 PM PDT"
+    convert_time outputs readable game times from ESPN timestamps (formerly shortDetail, see commit history for fun)
+    :param timestring: ESPN UTC timestamp
+    :return: replacement string converted to local time, i.e. "10/14 - 8:00 PM"
     """
-    t = timestring.split(" - ")
-    start = t[1]    # "8:15 PM EST"
-    n = start.split(" ")
-    # get pacific hour
-    p_h = str(int(n[0].split(":")[0]) - 3)
-    if int(p_h) == 0:
-        p_h = "12"
-    elif int(p_h) == -1:
-        p_h = "11"
-    elif int(p_h) == -2:
-        p_h = "10"
-    elif int(p_h) < -2:
-        p_h = str(0 - int(p_h))
-    # create pacific time str
-    p_t = p_h + ":" + n[0].split(":")[1]
-    # set AM PM
-    a_p = n[1]
-    if int(n[0].split(":")[0]) < 3:
-        a_p = "AM"
-    if int(n[0].split(":")[0]) == 12:
-        a_p = "AM"
-    dst = n[2]
-    # set proper time
-    if dst == "EST":
-        dst = "PST"
-    else:
-        dst = "PDT"
-    # return combined
-    return t[0] + " - " + p_t + " " + a_p + " " + dst
+    utc_dt = datetime.strptime(timestring, "%Y-%m-%dT%H:%MZ")
+    utc_zone = pytz.utc
+
+    # Define the Pacific Daylight Time timezone
+    pdt_zone = pytz.timezone("America/Los_Angeles")
+
+    # Convert UTC time to PDT
+    utc_dt = utc_zone.localize(utc_dt)
+    pdt_dt = utc_dt.astimezone(pdt_zone)
+
+    month_day = f"{pdt_dt.month}/{pdt_dt.day}"
+    hour_minute = pdt_dt.strftime("%I:%M %p").lstrip("0")  # Strip leading zero from hour
+
+    formatted_time = f"{month_day} - {hour_minute}"
+
+    return formatted_time
