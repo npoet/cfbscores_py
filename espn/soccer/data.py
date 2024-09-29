@@ -100,8 +100,12 @@ def create_base_obj_soccer(input_list, game_type):
                 "home_score": i["competitions"][0]["competitors"][0]["score"],
                 "away_score": i["competitions"][0]["competitors"][1]["score"],
                 "date": i["date"],
+                "time": i["status"]["type"]["shortDetail"],
                 "type": game_type,
-                "tv": "Final"
             }
+            try:
+                obj["headline"] = i["competitions"][0]["headlines"][0]["shortLinkText"]
+            except KeyError:
+                pass
             scores.append(obj)
     return scores
