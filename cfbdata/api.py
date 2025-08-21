@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from teams_service import TeamsService
+from .teams_service import TeamsService
 
 router = APIRouter()
 service = TeamsService()
