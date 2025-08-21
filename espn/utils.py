@@ -12,7 +12,7 @@ def convert_time(timestring):
     utc_zone = pytz.utc
 
     # Define the Pacific Daylight Time timezone
-    pdt_zone = pytz.timezone("America/Los_Angeles")
+    pdt_zone = pytz.timezone("US/Pacific")
 
     # Convert UTC time to PDT
     utc_dt = utc_zone.localize(utc_dt)
