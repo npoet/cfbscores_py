@@ -108,7 +108,7 @@ class SoccerBaseObject:
                     f"{scorer['athlete']['shortName']} "
                     f"{scorer['displayValue']} G"
                 )
-            except Exception:
+            except:
                 pass
 
     def _add_headline(self, comps):
@@ -123,7 +123,7 @@ class SoccerBaseObject:
             for p in path:
                 d = d[p]
             return d
-        except Exception:
+        except:
             return default
 
     def to_dict(self):
