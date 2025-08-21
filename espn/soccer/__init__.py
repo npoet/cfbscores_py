@@ -1,1 +1,1 @@
-from .soccer import get_epl
+from .data import get_epl
