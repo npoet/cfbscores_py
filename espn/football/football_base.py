@@ -182,10 +182,9 @@ class FootballBaseObject:
 
     @staticmethod
     def _fmt_leader(ld, with_name=False):
-        base = ld["athlete"]["position"]["abbreviation"] + ld["athlete"]["jersey"]
         if with_name:
-            return f"{base} {ld['athlete']['shortName']} {ld['displayValue']}"
-        return f"{base} {ld['displayValue']}"
+            return f"{ld['athlete']['shortName']} {ld['displayValue']}"
+        return f"{ld['displayValue']}"
 
     @staticmethod
     def _safe_get(d, path, default=None):
