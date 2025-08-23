@@ -15,12 +15,21 @@ async def get_scores():
     :return: sorted([{gameA1}...{gameAN} + {gameB1}...{gameBN} ... + {gameN1} ... {gameNN}])
     """
     all_scores = []
+    # track used cfb game_ids, so they aren't duplicated through lower divisions
+    cfb_game_ids = set()
     try:
-        all_scores += get_fbs()
+        fbs = get_fbs()
+        for game in fbs:
+            all_scores.append(game)
+            cfb_game_ids.add(game["game_id"])
     except requests.exceptions.JSONDecodeError:
         pass
     try:
-        all_scores += get_fcs()
+        fcs = get_fcs()
+        for game in fcs:
+            game_id = game["game_id"]
+            if game_id not in cfb_game_ids:
+                all_scores.append(game)
     except requests.exceptions.JSONDecodeError:
         pass
     try:
