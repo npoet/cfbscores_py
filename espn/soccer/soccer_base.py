@@ -98,7 +98,7 @@ class SoccerBaseObject:
             self.obj["odds"] = f"{self.game_type} | No Line"
 
     def _add_leaders(self, home, away):
-        # for soccer, only passing leaders (goal scorers)
+        # for soccer, only passing leaders (goalscorers)
         for side, label in [(home, "home"), (away, "away")]:
             try:
                 scorer = side["leaders"][0]["leaders"][0]
@@ -108,7 +108,7 @@ class SoccerBaseObject:
                     f"{scorer['athlete']['shortName']} "
                     f"{scorer['displayValue']} G"
                 )
-            except:
+            except (KeyError, IndexError):
                 pass
 
     def _add_headline(self, comps):
@@ -123,7 +123,7 @@ class SoccerBaseObject:
             for p in path:
                 d = d[p]
             return d
-        except:
+        except KeyError:
             return default
 
     def to_dict(self):

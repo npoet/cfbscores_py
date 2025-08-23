@@ -64,7 +64,7 @@ class FootballBaseObject:
         self._add_possession(comps, home)
         self._add_global_leaders(comps)
         self._add_last_play(comps)
-        self._add_win_prob(comps, home, away)
+        self._add_win_prob(comps)
 
     def _build_post_game(self):
         home, away, comps = self._base_team_info()
@@ -128,7 +128,7 @@ class FootballBaseObject:
                 self.obj[f"{label}_pass"] = self._fmt_leader(pas)
                 self.obj[f"{label}_rush"] = self._fmt_leader(rush)
                 self.obj[f"{label}_rec"] = self._fmt_leader(rec)
-            except:
+            except (KeyError, IndexError):
                 pass
 
     def _add_possession(self, comps, home):
@@ -148,7 +148,7 @@ class FootballBaseObject:
             self.obj["pass_leader"] = self._fmt_leader(pas, with_name=True)
             self.obj["rush_leader"] = self._fmt_leader(rush, with_name=True)
             self.obj["rec_leader"] = self._fmt_leader(rec, with_name=True)
-        except:
+        except (KeyError, IndexError):
             pass
 
     def _add_last_play(self, comps):
@@ -157,7 +157,7 @@ class FootballBaseObject:
         except KeyError:
             pass
 
-    def _add_win_prob(self, comps, home, away):
+    def _add_win_prob(self, comps):
         try:
             prob = comps["situation"]["lastPlay"]["probability"]
             home_prob, away_prob = prob["homeWinPercentage"], prob["awayWinPercentage"]
@@ -177,7 +177,7 @@ class FootballBaseObject:
             self.obj["gamecast"] = links[0]["href"]
             self.obj["box_score"] = links[1]["href"]
             self.obj["highlights"] = links[2]["href"]
-        except:
+        except KeyError:
             pass
 
     @staticmethod
@@ -192,7 +192,7 @@ class FootballBaseObject:
             for p in path:
                 d = d[p]
             return d
-        except:
+        except KeyError:
             return default
 
     def to_dict(self):
