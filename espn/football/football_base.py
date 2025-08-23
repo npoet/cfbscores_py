@@ -5,7 +5,10 @@ class FootballBaseObject:
     def __init__(self, raw_data: dict, game_type: str):
         self.raw = raw_data
         self.game_type = game_type
-        self.obj = {}
+        self.obj = {
+            # include game id from espn for identifying duplicates (FBS vs FCS etc.)
+            "game_id": self.raw.get("id")
+        }
 
         self.state = self.raw.get("status", {}).get("type", {}).get("state")
 
@@ -24,7 +27,7 @@ class FootballBaseObject:
         if "TBD" in self.raw.get("shortName", "") or "TBA" in self.raw.get("shortName", ""):
             return
         home, away, comps = self._base_team_info()
-        self.obj = {
+        self.obj.update({
             "home_id": home["team"]["location"],
             "home": home["team"]["abbreviation"],
             "home_site": home["team"]["links"][0]["href"],
@@ -36,7 +39,7 @@ class FootballBaseObject:
             "time": convert_time(self.raw["date"]),
             "date": self.raw["date"],
             "type": self.game_type
-        }
+        })
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
         self._add_odds(comps)
@@ -44,7 +47,7 @@ class FootballBaseObject:
 
     def _build_in_game(self):
         home, away, comps = self._base_team_info()
-        self.obj = {
+        self.obj.update({
             "home_id": home["team"]["location"],
             "home": home["team"]["abbreviation"],
             "home_site": home["team"]["links"][0]["href"],
@@ -58,7 +61,7 @@ class FootballBaseObject:
             "time": self.raw["status"]["type"]["shortDetail"],
             "date": self.raw["date"],
             "type": self.game_type
-        }
+        })
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
         self._add_possession(comps, home)
@@ -68,7 +71,7 @@ class FootballBaseObject:
 
     def _build_post_game(self):
         home, away, comps = self._base_team_info()
-        self.obj = {
+        self.obj.update({
             "home_id": home["team"]["location"],
             "home": home["team"]["abbreviation"],
             "home_site": home["team"]["links"][0]["href"],
@@ -82,7 +85,7 @@ class FootballBaseObject:
             "time": self.raw["status"]["type"]["shortDetail"],
             "date": self.raw["date"],
             "type": self.game_type
-        }
+        })
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
         self._add_global_leaders(comps)
