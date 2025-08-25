@@ -1,5 +1,5 @@
 import requests
-from espn.soccer.soccer_base import SoccerBaseObject
+from espn.sports.soccer.soccer_base import SoccerBaseObject
 
 
 def get_epl():

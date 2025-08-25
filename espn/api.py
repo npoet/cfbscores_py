@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 import requests
 
-from .football import get_fbs, get_fcs, get_nfl
-from .basketball import get_cbb
-from .soccer import get_epl
+from espn.sports.football import get_fbs, get_fcs, get_nfl
+from espn.sports.basketball import get_cbb
+from espn.sports.soccer import get_epl
 
 router = APIRouter()
 

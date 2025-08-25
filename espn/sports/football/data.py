@@ -1,6 +1,6 @@
 import requests
 
-from espn.football.football_base import FootballBaseObject
+from espn.sports.football.football_base import FootballBaseObject
 
 
 def get_fbs():

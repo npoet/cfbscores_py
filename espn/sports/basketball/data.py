@@ -1,5 +1,5 @@
 import requests
-from espn.basketball.basketball_base import BasketballBaseObject
+from espn.sports.basketball.basketball_base import BasketballBaseObject
 
 
 def get_cbb():
