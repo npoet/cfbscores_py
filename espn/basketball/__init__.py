@@ -1,1 +1,1 @@
-from .basketball import get_cbb
+from .data import get_cbb
