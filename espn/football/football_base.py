@@ -1,28 +1,8 @@
 from espn.utils import convert_time
+from espn.sports import SportsBaseObject
 
 
-class FootballBaseObject:
-    def __init__(self, raw_data: dict, game_type: str):
-        self.raw = raw_data
-        self.game_type = game_type
-        self.obj = {
-            # include game id from espn for identifying duplicates (FBS vs FCS etc.)
-            "game_id": self.raw.get("id")
-        }
-
-        self.state = self.raw.get("status", {}).get("type", {}).get("state")
-
-        if self.state == "pre":
-            self._build_pre_game()
-        elif self.state == "in":
-            self._build_in_game()
-        elif self.state == "post":
-            self._build_post_game()
-
-    def _base_team_info(self):
-        comps = self.raw.get("competitions", [])[0]
-        return comps["competitors"][0], comps["competitors"][1], comps
-
+class FootballBaseObject(SportsBaseObject):
     def _build_pre_game(self):
         if "TBD" in self.raw.get("shortName", "") or "TBA" in self.raw.get("shortName", ""):
             return
@@ -38,7 +18,7 @@ class FootballBaseObject:
             "away_mascot": away["team"]["name"],
             "time": convert_time(self.raw["date"]),
             "date": self.raw["date"],
-            "type": self.game_type
+            "type": self.game_type,
         })
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
@@ -60,7 +40,7 @@ class FootballBaseObject:
             "away_score": away.get("score"),
             "time": self.raw["status"]["type"]["shortDetail"],
             "date": self.raw["date"],
-            "type": self.game_type
+            "type": self.game_type,
         })
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
@@ -84,7 +64,7 @@ class FootballBaseObject:
             "away_score": away.get("score"),
             "time": self.raw["status"]["type"]["shortDetail"],
             "date": self.raw["date"],
-            "type": self.game_type
+            "type": self.game_type,
         })
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
@@ -92,37 +72,8 @@ class FootballBaseObject:
         self._add_team_leaders(home, away)
         self._add_links()
 
-    def _add_common_fields(self, home, away, comps):
-        self.obj["home_logo"] = home["team"].get("logo")
-        self.obj["away_logo"] = away["team"].get("logo")
-        self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "")
-        self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "")
-        try:
-            tv = comps["geoBroadcasts"][0]["media"]["shortName"]
-            self.obj["tv"] = tv if len(tv) <= 10 else "Off Air"
-        except (KeyError, IndexError):
-            self.obj["tv"] = "Off Air"
-
-    def _add_odds(self, comps):
-        try:
-            self.obj["odds"] = f"{self.game_type} | " + comps["odds"][0]["details"]
-        except (KeyError, IndexError):
-            self.obj["odds"] = f"{self.game_type} | No Line"
-
-    def _add_ranks(self, home, away):
-        try:
-            if home["curatedRank"]["current"] <= 25:
-                self.obj["home"] = f"#{home['curatedRank']['current']} {self.obj['home']}"
-        except KeyError:
-            pass
-        try:
-            if away["curatedRank"]["current"] <= 25:
-                self.obj["away"] = f"#{away['curatedRank']['current']} {self.obj['away']}"
-        except KeyError:
-            pass
-
+    # --- football-specific helpers ---
     def _add_leaders(self, home, away):
-        # team-specific leaders
         for side, label in [(home, "home"), (away, "away")]:
             try:
                 pas = side["leaders"][0]["leaders"][0]
@@ -180,7 +131,7 @@ class FootballBaseObject:
             self.obj["gamecast"] = links[0]["href"]
             self.obj["box_score"] = links[1]["href"]
             self.obj["highlights"] = links[2]["href"]
-        except KeyError:
+        except (KeyError, IndexError):
             pass
 
     @staticmethod
@@ -188,15 +139,3 @@ class FootballBaseObject:
         if with_name:
             return f"{ld['athlete']['shortName']} {ld['displayValue']}"
         return f"{ld['displayValue']}"
-
-    @staticmethod
-    def _safe_get(d, path, default=None):
-        try:
-            for p in path:
-                d = d[p]
-            return d
-        except KeyError:
-            return default
-
-    def to_dict(self):
-        return self.obj
