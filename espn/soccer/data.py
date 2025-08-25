@@ -13,7 +13,7 @@ def get_epl():
 
 
 def get_soccer_games(input_list, game_type):
-    """Convert ESPN football JSON to standardized list of dicts."""
+    """Convert ESPN soccer JSON to standardized list of dicts."""
     results = []
     for raw in input_list:
         try:
