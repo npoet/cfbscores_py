@@ -70,6 +70,7 @@ class FootballBaseObject(SportsBaseObject):
         self._add_ranks(home, away)
         self._add_global_leaders(comps)
         self._add_team_leaders(home, away)
+        self._add_headline(comps)
         self._add_links()
 
     # --- football-specific helpers ---
@@ -131,6 +132,13 @@ class FootballBaseObject(SportsBaseObject):
             self.obj["gamecast"] = links[0]["href"]
             self.obj["box_score"] = links[1]["href"]
             self.obj["highlights"] = links[2]["href"]
+        except (KeyError, IndexError):
+            pass
+
+    def _add_headline(self, comps):
+        try:
+            self.obj["headline"] = comps["headlines"][0]["shortLinkText"]
+            self.obj["description"] = comps["headlines"][0]["description"][1:]
         except (KeyError, IndexError):
             pass
 
