@@ -109,6 +109,7 @@ class FootballBaseObject(SportsBaseObject):
     def _add_last_play(self, comps):
         try:
             self.obj["last_play"] = comps["situation"]["lastPlay"]["text"]
+            self.obj["down_distance"] = comps["situation"]["downDistanceText"]
         except KeyError:
             pass
 
