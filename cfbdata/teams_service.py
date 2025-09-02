@@ -1,6 +1,45 @@
 import os
 from datetime import datetime
 import cfbd
+import requests
+
+
+def get_team_season(team_id: str) -> list:
+    """Get season schedule and results for a given team."""
+    url = "https://api.collegefootballdata.com/games?year=2025&team=Michigan"
+
+    payload = {}
+    headers = {
+        'Authorization': f'Bearer {os.environ["CFBD_API_KEY"]}'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    resp_games = response.json()
+    season = []
+
+    for game in resp_games:
+        obj = {
+            "home": game["homeTeam"],
+            "away": game["awayTeam"],
+            "home_score": game["homePoints"],
+            "away_score": game["awayPoints"],
+            "date": datetime.fromisoformat(game["startDate"]).date(),
+        }
+        if game["notes"] is not None:
+            obj["note"] = game["notes"]
+
+        try:
+            if game["homeTeam"].lower() == team_id.lower():
+                obj["pg_win_prob"] = round(game["homePostgameWinProbability"], 4)
+            elif game["awayTeam"].lower() == team_id.lower():
+                obj["pg_win_prob"] = round(game["awayPostgameWinProbability"], 4)
+        except (TypeError, AttributeError):
+            obj["pg_win_prob"] = ""
+
+        season.append(obj)
+
+    return season
 
 
 class TeamsService:
@@ -57,34 +96,6 @@ class TeamsService:
             pass
 
         return return_data
-
-    def get_team_season(self, team_id: str) -> list:
-        """Get season schedule and results for a given team."""
-        resp_games = self.games.get_games(year=self.year, team=team_id)
-        season = []
-
-        for game in resp_games:
-            obj = {
-                "home": game.home_team,
-                "away": game.away_team,
-                "home_score": game.home_points,
-                "away_score": game.away_points,
-                "date": datetime.fromisoformat(game.start_date).date(),
-            }
-            if game.notes is not None:
-                obj["note"] = game.notes
-
-            try:
-                if game.home_team.lower() == team_id.lower():
-                    obj["pg_win_prob"] = round(game.home_post_win_prob, 4)
-                elif game.away_team.lower() == team_id.lower():
-                    obj["pg_win_prob"] = round(game.away_post_win_prob, 4)
-            except TypeError:
-                obj["pg_win_prob"] = ""
-
-            season.append(obj)
-
-        return season
 
     def get_team_records(self, team_id: str) -> dict:
         """Return record breakdowns (expected wins, conf, home, away)."""
