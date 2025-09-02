@@ -6,7 +6,7 @@ import requests
 
 def get_team_season(team_id: str) -> list:
     """Get season schedule and results for a given team."""
-    url = "https://api.collegefootballdata.com/games?year=2025&team=Michigan"
+    url = f"https://api.collegefootballdata.com/games?year=2025&team={team_id}"
 
     payload = {}
     headers = {
