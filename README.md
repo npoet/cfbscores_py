@@ -24,6 +24,7 @@ From cfbscores dir: `pip install -r requirements.txt`
 * Current supported sports/divisions include:
   * FBS/FCS Football
   * NFL Football
+  * EPL Soccer
   * D1 NCAA Basketball
 
 This API is provided as-is and was created solely for my personal use. Future implementation plans include expanding sport and TV provider support, as well as additional statistical sources. Suggestions are welcome.
