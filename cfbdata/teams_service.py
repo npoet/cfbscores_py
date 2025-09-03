@@ -2,11 +2,14 @@ import os
 from datetime import datetime
 import cfbd
 import requests
+from urllib.parse import quote
 
 
 def get_team_season(team_id: str) -> list:
     """Get season schedule and results for a given team."""
-    url = f"https://api.collegefootballdata.com/games?year=2025&team={team_id}"
+    # Encode team_id to handle special characters (&, etc)
+    safe_team_id = quote(team_id, safe='')
+    url = f"https://api.collegefootballdata.com/games?year=2025&team={safe_team_id}"
 
     payload = {}
     headers = {
