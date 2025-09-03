@@ -56,9 +56,12 @@ class TeamsService:
     def get_team_info(self, team_id: str) -> dict:
         """Build team ratings page (SP+, Elo, FPI, SRS)."""
         resp_sp = self.ratings.get_sp_ratings(year=self.year)
-        team_ranking_sp = [
-            r.ranking for r in resp_sp if r.team.lower() == team_id.lower()
-        ][0]
+        try:
+            team_ranking_sp = [
+                r.ranking for r in resp_sp if r.team.lower() == team_id.lower()
+            ][0]
+        except IndexError:
+            team_ranking_sp = None
         resp_sp_team = self.ratings.get_sp_ratings(
             year=self.year, team=team_id.lower()
         )
@@ -73,19 +76,25 @@ class TeamsService:
 
         # Elo
         resp_elo = self.ratings.get_elo_ratings(year=self.year, team=team_id.lower())
-        return_data["elo_ovr_rating"] = resp_elo[0].elo
+        try:
+            return_data["elo_ovr_rating"] = resp_elo[0].elo
+        except IndexError:
+            pass
 
         # FPI
         resp_fpi = self.ratings.get_fpi_ratings(year=self.year, team=team_id.lower())
-        fpi = resp_fpi[0]
-        return_data.update(
-            {
-                "fpi_ovr_ranking": fpi.resume_ranks.fpi,
-                "fpi_ovr_rating": fpi.fpi,
-                "fpi_sos": fpi.resume_ranks.strength_of_schedule,
-                "fpi_game_control": fpi.resume_ranks.game_control,
-            }
-        )
+        try:
+            fpi = resp_fpi[0]
+            return_data.update(
+                {
+                    "fpi_ovr_ranking": fpi.resume_ranks.fpi,
+                    "fpi_ovr_rating": fpi.fpi,
+                    "fpi_sos": fpi.resume_ranks.strength_of_schedule,
+                    "fpi_game_control": fpi.resume_ranks.game_control,
+                }
+            )
+        except IndexError:
+            pass
 
         # SRS
         resp_srs = self.ratings.get_srs_ratings(year=self.year, team=team_id.lower())
