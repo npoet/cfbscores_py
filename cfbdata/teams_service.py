@@ -22,12 +22,13 @@ def get_team_season(team_id: str) -> list:
     season = []
 
     for game in resp_games:
+        date = datetime.fromisoformat(game["startDate"].replace("Z", "+00:00"))
         obj = {
             "home": game["homeTeam"],
             "away": game["awayTeam"],
             "home_score": game["homePoints"],
             "away_score": game["awayPoints"],
-            "date": datetime.fromisoformat(game["startDate"]).date(),
+            "date": date.date(),
         }
         if game["notes"] is not None:
             obj["note"] = game["notes"]
