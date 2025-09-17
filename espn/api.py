@@ -41,7 +41,7 @@ async def get_scores():
     except requests.exceptions.JSONDecodeError:
         pass
     # re-sort overall list
-    return sorted(all_scores, key=lambda k: k['date'])
+    return sorted(all_scores, key=lambda k: k["date"])
 
 
 @router.get("/football")
@@ -73,7 +73,7 @@ def get_football():
     except requests.exceptions.JSONDecodeError:
         pass
     # re-sort overall list
-    return sorted(all_scores, key=lambda k: k['date'])
+    return sorted(all_scores, key=lambda k: k["date"])
 
 
 @router.get("/basketball")

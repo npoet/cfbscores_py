@@ -36,12 +36,16 @@ class SportsBaseObject:
     def _add_ranks(self, home, away):
         try:
             if home["curatedRank"]["current"] <= 25:
-                self.obj["home"] = f"#{home['curatedRank']['current']} {self.obj['home']}"
+                self.obj[
+                    "home"
+                ] = f"#{home['curatedRank']['current']} {self.obj['home']}"
         except KeyError:
             pass
         try:
             if away["curatedRank"]["current"] <= 25:
-                self.obj["away"] = f"#{away['curatedRank']['current']} {self.obj['away']}"
+                self.obj[
+                    "away"
+                ] = f"#{away['curatedRank']['current']} {self.obj['away']}"
         except KeyError:
             pass
 
@@ -58,6 +62,11 @@ class SportsBaseObject:
         return self.obj
 
     # abstract methods for subclasses
-    def _build_pre_game(self): raise NotImplementedError
-    def _build_in_game(self): raise NotImplementedError
-    def _build_post_game(self): raise NotImplementedError
+    def _build_pre_game(self):
+        raise NotImplementedError
+
+    def _build_in_game(self):
+        raise NotImplementedError
+
+    def _build_post_game(self):
+        raise NotImplementedError

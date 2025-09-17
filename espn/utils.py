@@ -19,7 +19,9 @@ def convert_time(timestring):
     pdt_dt = utc_dt.astimezone(pdt_zone)
 
     month_day = f"{pdt_dt.month}/{pdt_dt.day}"
-    hour_minute = pdt_dt.strftime("%I:%M %p").lstrip("0")  # Strip leading zero from hour
+    hour_minute = pdt_dt.strftime("%I:%M %p").lstrip(
+        "0"
+    )  # Strip leading zero from hour
 
     formatted_time = f"{month_day} - {hour_minute}"
 

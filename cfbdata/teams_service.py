@@ -8,17 +8,16 @@ from urllib.parse import quote
 def get_team_season(team_id: str) -> list:
     """Get season schedule and results for a given team."""
     # Encode team_id to handle special characters (&, etc)
-    safe_team_id = quote(team_id, safe='')
+    safe_team_id = quote(team_id, safe="")
     url = f"https://api.collegefootballdata.com/games?year=2025&team={safe_team_id}"
 
     payload = {}
-    headers = {
-        'Authorization': f'Bearer {os.environ["CFBD_API_KEY"]}'
-    }
+    headers = {"Authorization": f'Bearer {os.environ["CFBD_API_KEY"]}'}
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
     resp_games = response.json()
+
     season = []
 
     for game in resp_games:
@@ -66,9 +65,7 @@ class TeamsService:
             ][0]
         except IndexError:
             team_ranking_sp = None
-        resp_sp_team = self.ratings.get_sp_ratings(
-            year=self.year, team=team_id.lower()
-        )
+        resp_sp_team = self.ratings.get_sp_ratings(year=self.year, team=team_id.lower())
         sp = resp_sp_team[0]
 
         return_data = {
