@@ -40,6 +40,10 @@ async def get_scores():
         all_scores += get_epl()
     except requests.exceptions.JSONDecodeError:
         pass
+
+    # keep only games that have a 'date' field
+    all_scores = [g for g in all_scores if "date" in g]
+
     # re-sort overall list
     return sorted(all_scores, key=lambda k: k["date"])
 
