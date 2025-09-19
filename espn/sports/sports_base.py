@@ -25,6 +25,10 @@ class SportsBaseObject:
             short_name = comps["geoBroadcasts"][0]["media"]["shortName"]
             if short_name == "The CW Network":
                 self.obj["tv"] = "The CW"
+            elif short_name == "Scripps Sports":
+                self.obj["tv"] = "Scripps"
+            elif short_name.endswith("Network"):
+                self.obj["tv"] = short_name.replace("Network", "Net")
             else:
                 self.obj["tv"] = short_name
         except (KeyError, IndexError):
