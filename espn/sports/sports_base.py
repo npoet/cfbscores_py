@@ -22,8 +22,7 @@ class SportsBaseObject:
         self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "")
         self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "")
         try:
-            tv = comps["geoBroadcasts"][0]["media"]["shortName"]
-            self.obj["tv"] = tv if len(tv) <= 10 else "Off Air"
+            self.obj["tv"] = comps["geoBroadcasts"][0]["media"]["shortName"]
         except (KeyError, IndexError):
             self.obj["tv"] = "Off Air"
 
@@ -36,16 +35,16 @@ class SportsBaseObject:
     def _add_ranks(self, home, away):
         try:
             if home["curatedRank"]["current"] <= 25:
-                self.obj[
-                    "home"
-                ] = f"#{home['curatedRank']['current']} {self.obj['home']}"
+                self.obj["home"] = (
+                    f"#{home['curatedRank']['current']} {self.obj['home']}"
+                )
         except KeyError:
             pass
         try:
             if away["curatedRank"]["current"] <= 25:
-                self.obj[
-                    "away"
-                ] = f"#{away['curatedRank']['current']} {self.obj['away']}"
+                self.obj["away"] = (
+                    f"#{away['curatedRank']['current']} {self.obj['away']}"
+                )
         except KeyError:
             pass
 
