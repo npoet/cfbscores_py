@@ -22,7 +22,17 @@ class SportsBaseObject:
         self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "")
         self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "")
         try:
-            self.obj["tv"] = comps["geoBroadcasts"][0]["media"]["shortName"]
+            short_name = comps["geoBroadcasts"][0]["media"]["shortName"]
+            if short_name == "The CW Network":
+                self.obj["tv"] = "The CW"
+            elif short_name == "NEC Front Row":
+                self.obj["tv"] = "NEC Net"
+            elif short_name == "Scripps Sports":
+                self.obj["tv"] = "Scripps"
+            elif short_name.endswith("Network"):
+                self.obj["tv"] = short_name.replace("Network", "Net")
+            else:
+                self.obj["tv"] = short_name
         except (KeyError, IndexError):
             self.obj["tv"] = "Off Air"
 
