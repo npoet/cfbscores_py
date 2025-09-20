@@ -17,8 +17,8 @@ class SportsBaseObject:
         return comps["competitors"][0], comps["competitors"][1], comps
 
     def _add_common_fields(self, home, away, comps):
-        self.obj["home_logo"] = home["team"].get("logo")
-        self.obj["away_logo"] = away["team"].get("logo")
+        self.obj["home_logo"] = home["team"].get("logo") + "&h=104&w=104"
+        self.obj["away_logo"] = away["team"].get("logo") + "&h=104&w=104"
         self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "")
         self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "")
         try:
