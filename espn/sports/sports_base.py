@@ -1,3 +1,9 @@
+from urllib.parse import urlparse
+
+ESPN_CDN_URL_PREFIX = "https://a1.espncdn.com/combiner/i?img=/i/teamlogos/"
+ESPN_CDN_TRANSFORM = "&h=104&w=104"
+
+
 class SportsBaseObject:
     def __init__(self, raw_data: dict, game_type: str):
         self.raw = raw_data
@@ -17,8 +23,14 @@ class SportsBaseObject:
         return comps["competitors"][0], comps["competitors"][1], comps
 
     def _add_common_fields(self, home, away, comps):
-        self.obj["home_logo"] = home["team"].get("logo") + "&h=104&w=104"
-        self.obj["away_logo"] = away["team"].get("logo") + "&h=104&w=104"
+        home_logo = urlparse(home["team"].get("logo")).path.replace(
+            "/i/teamlogos/", "", 1
+        )
+        away_logo = urlparse(away["team"].get("logo")).path.replace(
+            "/i/teamlogos/", "", 1
+        )
+        self.obj["home_logo"] = ESPN_CDN_URL_PREFIX + home_logo + ESPN_CDN_TRANSFORM
+        self.obj["away_logo"] = ESPN_CDN_URL_PREFIX + away_logo + ESPN_CDN_TRANSFORM
         self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "")
         self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "")
         try:
