@@ -39,6 +39,10 @@ class SportsBaseObject:
                 self.obj["tv"] = "The CW"
             elif short_name == "NEC Front Row":
                 self.obj["tv"] = "NEC Net"
+            elif short_name == "Prime Video":
+                self.obj["tv"] = "Prime"
+            elif short_name == "SEC Network":
+                self.obj["tv"] = "SEC Net"
             elif short_name == "Scripps Sports":
                 self.obj["tv"] = "Scripps"
             elif short_name.endswith("Network"):
