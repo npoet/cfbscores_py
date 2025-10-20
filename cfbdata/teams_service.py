@@ -48,9 +48,9 @@ def get_team_season(team_id: str) -> list:
 class TeamsService:
     def __init__(self, year: int = 2025):
         # init CFBD config
-        config = cfbd.Configuration()
-        config.api_key["Authorization"] = os.environ["CFBD_API_KEY"]
-        config.api_key_prefix["Authorization"] = "Bearer"
+        config = cfbd.Configuration(
+            access_token=os.environ["CFBD_API_KEY"]
+        )
 
         self.year = year
         self.ratings = cfbd.RatingsApi(cfbd.ApiClient(config))
