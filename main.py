@@ -7,7 +7,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://npoet.dev", "https://scores.npoet.dev"],
+    allow_origins=[
+        "https://npoet.dev",
+        "https://scores.npoet.dev",
+        "https://hoops.npoet.dev",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
