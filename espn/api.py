@@ -91,7 +91,7 @@ def get_basketball():
         all_scores += get_cbb()
     except requests.exceptions.JSONDecodeError:
         pass
-    return all_scores
+    return sorted(all_scores, key=lambda k: k["date"])
 
 
 @router.get("/soccer")
@@ -105,4 +105,4 @@ def get_soccer():
         all_scores += get_epl()
     except requests.exceptions.JSONDecodeError:
         pass
-    return all_scores
+    return sorted(all_scores, key=lambda k: k["date"])

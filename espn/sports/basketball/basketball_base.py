@@ -13,7 +13,7 @@ class BasketballBaseObject(SportsBaseObject):
                 "away": away["team"]["abbreviation"],
                 "away_site": away["team"]["links"][0]["href"],
                 "away_mascot": away["team"]["name"],
-                "time": convert_time(self.raw["status"]["type"]["shortDetail"]),
+                "time": self.raw["status"]["type"]["shortDetail"],
                 "date": self.raw["date"],
                 "type": self.game_type,
             }
