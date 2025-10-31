@@ -48,9 +48,9 @@ def get_team_season(team_id: str) -> list:
 class TeamsService:
     def __init__(self, year: int = 2025):
         # init CFBD config
-        config = cfbd.Configuration()
-        config.api_key["Authorization"] = os.environ["CFBD_API_KEY"]
-        config.api_key_prefix["Authorization"] = "Bearer"
+        config = cfbd.Configuration(
+            access_token=os.environ["CFBD_API_KEY"]
+        )
 
         self.year = year
         self.ratings = cfbd.RatingsApi(cfbd.ApiClient(config))
@@ -58,14 +58,14 @@ class TeamsService:
 
     def get_team_info(self, team_id: str) -> dict:
         """Build team ratings page (SP+, Elo, FPI, SRS)."""
-        resp_sp = self.ratings.get_sp_ratings(year=self.year)
+        resp_sp = self.ratings.get_sp(year=self.year)
         try:
             team_ranking_sp = [
                 r.ranking for r in resp_sp if r.team.lower() == team_id.lower()
             ][0]
         except IndexError:
             team_ranking_sp = None
-        resp_sp_team = self.ratings.get_sp_ratings(year=self.year, team=team_id.lower())
+        resp_sp_team = self.ratings.get_sp(year=self.year, team=team_id.lower())
         sp = resp_sp_team[0]
 
         return_data = {
@@ -76,14 +76,14 @@ class TeamsService:
         }
 
         # Elo
-        resp_elo = self.ratings.get_elo_ratings(year=self.year, team=team_id.lower())
+        resp_elo = self.ratings.get_elo(year=self.year, team=team_id.lower())
         try:
             return_data["elo_ovr_rating"] = resp_elo[0].elo
         except IndexError:
             pass
 
         # FPI
-        resp_fpi = self.ratings.get_fpi_ratings(year=self.year, team=team_id.lower())
+        resp_fpi = self.ratings.get_fpi(year=self.year, team=team_id.lower())
         try:
             fpi = resp_fpi[0]
             return_data.update(
@@ -98,7 +98,7 @@ class TeamsService:
             pass
 
         # SRS
-        resp_srs = self.ratings.get_srs_ratings(year=self.year, team=team_id.lower())
+        resp_srs = self.ratings.get_srs(year=self.year, team=team_id.lower())
         try:
             srs = resp_srs[0]
             return_data["srs_ovr_rating"] = srs.rating
@@ -109,7 +109,7 @@ class TeamsService:
 
     def get_team_records(self, team_id: str) -> dict:
         """Return record breakdowns (expected wins, conf, home, away)."""
-        resp_rec = self.games.get_team_records(year=self.year, team=team_id)[0]
+        resp_rec = self.games.get_records(year=self.year, team=team_id)[0]
         return {
             "exp_wins": resp_rec.expected_wins,
             "conference_wl": f"{resp_rec.conference_games.wins}-{resp_rec.conference_games.losses}",
