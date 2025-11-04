@@ -68,5 +68,24 @@ class BasketballBaseObject(SportsBaseObject):
         except KeyError:
             pass
 
+    def _add_leaders(self, home, away):
+        for side, label in [(home, "home"), (away, "away")]:
+            try:
+                pts = side["leaders"][0]["leaders"][0]
+                reb = side["leaders"][1]["leaders"][0]
+                ast = side["leaders"][2]["leaders"][0]
+                self.obj[f"{label}_pts_leader"] = self._fmt_leader(pts)
+                self.obj[f"{label}_reb_leader"] = self._fmt_leader(reb)
+                self.obj[f"{label}_ast_leader"] = self._fmt_leader(ast)
+            except (KeyError, IndexError):
+                pass
+
+    @staticmethod
+    def _fmt_leader(ld, with_name=False):
+        if with_name:
+            return f"{ld['athlete']['shortName']} {ld['displayValue']}"
+        return f"{ld['displayValue']}"
+
+
 def create_base_obj_basketball(input_list, game_type):
     return [BasketballBaseObject(raw, game_type).to_dict() for raw in input_list]
