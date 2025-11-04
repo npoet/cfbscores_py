@@ -46,7 +46,9 @@ class BasketballBaseObject(SportsBaseObject):
         self._add_win_prob(comps)
 
     def _build_post_game(self):
+        home, away, comps = self._base_team_info()
         self._build_in_game()
+        self._add_headline(comps)
 
     def _add_last_play(self, comps):
         try:
@@ -80,6 +82,13 @@ class BasketballBaseObject(SportsBaseObject):
                 self.obj[f"{label}_ast_leader"] = self._fmt_leader(ast, with_name=True) + " ast"
             except (KeyError, IndexError):
                 pass
+
+    def _add_headline(self, comps):
+        try:
+            self.obj["headline"] = comps["headlines"][0]["shortLinkText"]
+            self.obj["description"] = comps["headlines"][0]["description"][1:]
+        except (KeyError, IndexError):
+            pass
 
     @staticmethod
     def _fmt_leader(ld, with_name=False):
