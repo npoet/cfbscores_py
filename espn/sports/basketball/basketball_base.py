@@ -49,6 +49,7 @@ class BasketballBaseObject(SportsBaseObject):
         home, away, comps = self._base_team_info()
         self._build_in_game()
         self._add_headline(comps)
+        self._add_links()
 
     def _add_last_play(self, comps):
         try:
@@ -87,6 +88,15 @@ class BasketballBaseObject(SportsBaseObject):
         try:
             self.obj["headline"] = comps["headlines"][0]["shortLinkText"]
             self.obj["description"] = comps["headlines"][0]["description"][1:]
+        except (KeyError, IndexError):
+            pass
+
+    def _add_links(self):
+        try:
+            links = self.raw.get("links", [])
+            self.obj["gamecast"] = links[0]["href"]
+            self.obj["box_score"] = links[1]["href"]
+            self.obj["highlights"] = links[2]["href"]
         except (KeyError, IndexError):
             pass
 
