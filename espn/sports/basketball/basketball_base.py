@@ -75,9 +75,9 @@ class BasketballBaseObject(SportsBaseObject):
                 pts = side["leaders"][0]["leaders"][0]
                 reb = side["leaders"][1]["leaders"][0]
                 ast = side["leaders"][2]["leaders"][0]
-                self.obj[f"{label}_pts_leader"] = self._fmt_leader(pts)
-                self.obj[f"{label}_reb_leader"] = self._fmt_leader(reb)
-                self.obj[f"{label}_ast_leader"] = self._fmt_leader(ast)
+                self.obj[f"{label}_pts_leader"] = self._fmt_leader(pts, with_name=True) + " points"
+                self.obj[f"{label}_reb_leader"] = self._fmt_leader(reb, with_name=True) + " rebounds"
+                self.obj[f"{label}_ast_leader"] = self._fmt_leader(ast, with_name=True) + " assists"
             except (KeyError, IndexError):
                 pass
 
