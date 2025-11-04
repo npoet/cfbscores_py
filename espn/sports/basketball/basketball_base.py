@@ -41,6 +41,7 @@ class BasketballBaseObject(SportsBaseObject):
         )
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
+        self._add_leaders(home, away)
         self._add_last_play(comps)
         self._add_win_prob(comps)
 
