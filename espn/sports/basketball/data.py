@@ -10,7 +10,7 @@ def get_cbb():
     url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard"
     params = {
         "seasonType": 2,
-        "groupa": 50,  # all D1A, remove for top 25
+        "groups": 50,  # all D1A, remove for top 25
     }
     res = requests.get(url, params=params).json()["events"]
     return get_basketball_games(res, "CBB")
