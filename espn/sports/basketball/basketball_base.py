@@ -41,10 +41,32 @@ class BasketballBaseObject(SportsBaseObject):
         )
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
+        self._add_last_play(comps)
+        self._add_win_prob(comps)
 
     def _build_post_game(self):
         self._build_in_game()
 
+    def _add_last_play(self, comps):
+        try:
+            self.obj["last_play"] = comps["situation"]["lastPlay"]["text"]
+            self.obj["down_distance"] = comps["situation"]["downDistanceText"]
+            self.obj["short_down_distance"] = comps["situation"][
+                "shortDownDistanceText"
+            ]
+        except KeyError:
+            pass
+
+    def _add_win_prob(self, comps):
+        try:
+            prob = comps["situation"]["lastPlay"]["probability"]
+            home_prob, away_prob = prob["homeWinPercentage"], prob["awayWinPercentage"]
+            if home_prob >= away_prob:
+                self.obj["win_prob"] = f"{self.obj['home']} {round(home_prob * 100, 2)}%"
+            else:
+                self.obj["win_prob"] = f"{self.obj['away']} {round(away_prob * 100, 2)}%"
+        except KeyError:
+            pass
 
 def create_base_obj_basketball(input_list, game_type):
     return [BasketballBaseObject(raw, game_type).to_dict() for raw in input_list]
