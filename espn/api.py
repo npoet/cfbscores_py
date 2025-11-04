@@ -2,7 +2,7 @@ from fastapi import APIRouter
 import requests
 
 from espn.sports.football import get_fbs, get_fcs, get_nfl
-from espn.sports.basketball import get_cbb
+from espn.sports.basketball import get_cbb, get_nba
 from espn.sports.soccer import get_epl
 
 router = APIRouter()
@@ -89,6 +89,10 @@ def get_basketball():
     all_scores = []
     try:
         all_scores += get_cbb()
+    except requests.exceptions.JSONDecodeError:
+        pass
+    try:
+        all_scores += get_nba()
     except requests.exceptions.JSONDecodeError:
         pass
     return sorted(all_scores, key=lambda k: k["date"])

@@ -16,6 +16,19 @@ def get_cbb():
     return get_basketball_games(res, "CBB")
 
 
+def get_nba():
+    """
+    get_nba creates and returns a list of basketball score/schedule dicts for the NBA
+    :return: Result of data.create_base_obj_basketball(): [{game1}, ... {gameN}] sorted by date ascending
+    """
+    url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
+    params = {
+        "seasonType": 2,
+    }
+    res = requests.get(url, params=params).json()["events"]
+    return get_basketball_games(res, "NBA")
+
+
 def get_basketball_games(input_list, game_type):
     """Convert ESPN basketball JSON to standardized list of dicts."""
     results = []
