@@ -20,6 +20,7 @@ class BasketballBaseObject(SportsBaseObject):
         )
         self._add_common_fields(home, away, comps)
         self._add_ranks(home, away)
+        self._add_leaders(home, away)
         self._add_odds(comps)
 
     def _build_in_game(self):
