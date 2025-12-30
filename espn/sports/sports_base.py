@@ -47,6 +47,8 @@ class SportsBaseObject:
                 self.obj["tv"] = "Scripps"
             elif short_name.endswith("Network"):
                 self.obj["tv"] = short_name.replace("Network", "Net")
+            elif "FanDuel" in short_name:
+                self.obj["tv"] = "FanDuel"
             else:
                 self.obj["tv"] = short_name
         except (KeyError, IndexError):
