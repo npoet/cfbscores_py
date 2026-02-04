@@ -31,8 +31,8 @@ class SportsBaseObject:
         )
         self.obj["home_logo"] = ESPN_CDN_URL_PREFIX + home_logo + ESPN_CDN_TRANSFORM
         self.obj["away_logo"] = ESPN_CDN_URL_PREFIX + away_logo + ESPN_CDN_TRANSFORM
-        self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "")
-        self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "")
+        self.obj["home_record"] = self._safe_get(home, ["records", 0, "summary"], "0-0")
+        self.obj["away_record"] = self._safe_get(away, ["records", 0, "summary"], "0-0")
         try:
             short_name = comps["geoBroadcasts"][0]["media"]["shortName"]
             if short_name == "The CW Network":
@@ -52,7 +52,7 @@ class SportsBaseObject:
             else:
                 self.obj["tv"] = short_name
         except (KeyError, IndexError):
-            self.obj["tv"] = "Off Air"
+            self.obj["tv"] = "TBD"
 
     def _add_odds(self, comps, index: int = 0):
         try:
